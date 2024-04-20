@@ -32,13 +32,15 @@ def call_api(endpoint, log, pwd):
         if response.status_code == 200:
             return 'Success'
         elif response.status_code == 401:  # Unauthorized
-            return 'Failed - Incorrect credentials'
+            return 'Incorrect credentials'
         elif response.status_code == 404:  # Not found
-            return 'Failed - Endpoint not found'
+            return 'Endpoint not found'
+        elif response.status_code == 403:  # Not found
+            return 'Unable to access'
         else:
-            return f'Failed - HTTP {response.status_code}'
+            return f'Error Code - HTTP {response.status_code}'
     except requests.exceptions.ConnectionError:
-        return 'Failed - Network issue or domain does not exist'
+        return 'Network issue or domain does not exist'
     except Exception as e:
         return f'Failed - {str(e)}'
 
